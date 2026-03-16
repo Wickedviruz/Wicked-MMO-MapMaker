@@ -3,12 +3,11 @@ using Godot;
 public partial class TilePaletteController : Node
 {
 	[Export] private GridContainer gridContainer;
-	private TilePainter tilePainter;
+	[Export] private TilePainter tilePainter;
 	private TileSet tileSet;
 
 	public override void _Ready()
 	{
-		tilePainter = GetNode<TilePainter>("../../Map/Ground");
 		tileSet = tilePainter.TileSet;
 
 		if (tileSet == null)
