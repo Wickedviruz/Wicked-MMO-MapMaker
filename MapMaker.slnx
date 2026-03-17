@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MapMaker.App/MapMaker.App.csproj" />
+  <Project Path="MapMaker.Core/MapMaker.Core.csproj" />
+</Solution>

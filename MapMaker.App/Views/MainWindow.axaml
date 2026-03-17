@@ -1,0 +1,94 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:MapMaker.App.ViewModels"
+        xmlns:panels="clr-namespace:MapMaker.App.Views.Panels"
+        x:Class="MapMaker.App.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Wicked MMO Map Editor"
+        Width="1280" Height="720"
+        MinWidth="800" MinHeight="600"
+        Background="#1a1a1a">
+
+    <DockPanel>
+
+        <!-- Menyrad -->
+        <Menu DockPanel.Dock="Top" Background="#2a2a2a">
+            <MenuItem Header="File">
+                <MenuItem Header="New Map"  Command="{Binding NewMapCommand}"  InputGesture="Ctrl+N"/>
+                <MenuItem Header="Open Map" Command="{Binding OpenMapCommand}" InputGesture="Ctrl+O"/>
+                <Separator />
+                <MenuItem Header="Save"     Command="{Binding SaveMapCommand}" InputGesture="Ctrl+S"/>
+                <MenuItem Header="Save As"  Command="{Binding SaveAsMapCommand}"/>
+                <Separator />
+                <MenuItem Header="Import Sprites..." Command="{Binding ImportSpritesCommand}" InputGesture="Ctrl+I"/>
+                <Separator />
+                <MenuItem Header="Exit"     Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" Command="{Binding UndoCommand}" InputGesture="Ctrl+Z"/>
+                <MenuItem Header="Redo" Command="{Binding RedoCommand}" InputGesture="Ctrl+Y"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Show Grid"   Command="{Binding ToggleGridCommand}"/>
+                <MenuItem Header="Show Spawns" Command="{Binding ToggleSpawnsCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Toolbar -->
+        <Border DockPanel.Dock="Top" Background="#2a2a2a" Padding="4">
+            <StackPanel Orientation="Horizontal" Spacing="4">
+                <Button Content="New"  Command="{Binding NewMapCommand}"  Width="60"/>
+                <Button Content="Open" Command="{Binding OpenMapCommand}" Width="60"/>
+                <Button Content="Save" Command="{Binding SaveMapCommand}" Width="60"/>
+                <Separator Width="1" Background="#444" Margin="4,0"/>
+                <Button Content="✏️ Draw"   Command="{Binding SetToolDrawCommand}"   Width="70"/>
+                <Button Content="🗑️ Erase"  Command="{Binding SetToolEraseCommand}"  Width="70"/>
+                <Button Content="🪣 Fill"   Command="{Binding SetToolFillCommand}"   Width="70"/>
+                <Separator Width="1" Background="#444" Margin="4,0"/>
+                <TextBlock Text="Zoom:" VerticalAlignment="Center" Foreground="#aaa"/>
+                <TextBlock Text="{Binding ZoomLabel}" VerticalAlignment="Center" 
+                           Foreground="White" Width="40"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Statusbar -->
+        <Border DockPanel.Dock="Bottom" Background="#2a2a2a" Padding="6,3">
+            <Grid ColumnDefinitions="*,*,*">
+                <TextBlock Grid.Column="0" Text="{Binding StatusText}" Foreground="#aaa" FontSize="12"/>
+                <TextBlock Grid.Column="1" Text="{Binding CursorPosition}" 
+                           Foreground="#aaa" FontSize="12" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="{Binding MapInfo}" 
+                           Foreground="#aaa" FontSize="12" HorizontalAlignment="Right"/>
+            </Grid>
+        </Border>
+
+        <!-- Huvud-layout -->
+        <Grid ColumnDefinitions="220,*,220">
+
+            <!-- Vänster: Sprite Picker -->
+            <panels:SpritePickerPanel Grid.Column="0" DataContext="{Binding SpritePicker}"/>
+
+            <!-- Mitten: Canvas placeholder -->
+            <Border Grid.Column="1" Background="#1e1e1e" Margin="2">
+                <TextBlock Text="Canvas — kommer snart" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Foreground="#555" FontSize="16"/>
+            </Border>
+
+            <!-- Höger: Tabs för Layers / Spawns -->
+            <TabControl Grid.Column="2" Background="#252525">
+                <TabItem Header="Layers">
+                    <panels:LayerPanel DataContext="{Binding LayerPanel}"/>
+                </TabItem>
+                <TabItem Header="Spawns">
+                    <panels:SpawnPanel DataContext="{Binding SpawnPanel}"/>
+                </TabItem>
+                <TabItem Header="Items">
+                    <panels:ItemPanel DataContext="{Binding ItemPanel}"/>
+                </TabItem>
+            </TabControl>
+
+        </Grid>
+    </DockPanel>
+</Window>

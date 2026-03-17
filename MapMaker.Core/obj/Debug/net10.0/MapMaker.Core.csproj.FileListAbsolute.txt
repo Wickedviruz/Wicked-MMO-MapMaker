@@ -1,0 +1,13 @@
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/bin/Debug/net10.0/MapMaker.Core.deps.json
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/bin/Debug/net10.0/MapMaker.Core.dll
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/bin/Debug/net10.0/MapMaker.Core.pdb
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.AssemblyInfoInputs.cache
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.AssemblyInfo.cs
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.csproj.CoreCompileInputs.cache
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.sourcelink.json
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.dll
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/refint/MapMaker.Core.dll
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.pdb
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/ref/MapMaker.Core.dll
+/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/Debug/net10.0/MapMaker.Core.csproj.AssemblyReference.cache

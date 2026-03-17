@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:MapMaker.App.ViewModels"
+             xmlns:map="clr-namespace:MapMaker.Core.Map;assembly=MapMaker.Core"
+             x:Class="MapMaker.App.Views.Panels.LayerPanel"
+             x:DataType="vm:LayerPanelViewModel">
+    <DockPanel>
+
+        <!-- Header -->
+        <Border DockPanel.Dock="Top" Padding="6,4">
+            <TextBlock Text="Lager" Foreground="White" FontWeight="Bold"/>
+        </Border>
+        <Border DockPanel.Dock="Top" Height="1" Background="#444"/>
+
+        <!-- Knappar -->
+        <Border DockPanel.Dock="Bottom" Padding="4" Background="#1e1e1e">
+            <StackPanel Orientation="Horizontal" Spacing="4">
+                <Button Content="＋" Command="{Binding AddLayerCommand}"
+                        ToolTip.Tip="Lägg till lager" Width="32"/>
+                <Button Content="－" Command="{Binding RemoveLayerCommand}"
+                        ToolTip.Tip="Ta bort lager" Width="32"/>
+                <Button Content="↑" Command="{Binding MoveUpCommand}"
+                        ToolTip.Tip="Flytta upp" Width="32"/>
+                <Button Content="↓" Command="{Binding MoveDownCommand}"
+                        ToolTip.Tip="Flytta ned" Width="32"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Lager-lista -->
+        <ListBox ItemsSource="{Binding Layers}"
+                 SelectedItem="{Binding SelectedLayer}"
+                 Background="#252525">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="map:MapLayer">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0" Text="{Binding Name}"
+                                   VerticalAlignment="Center" Foreground="White"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Type}"
+                                   Foreground="#888" FontSize="11"
+                                   VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </DockPanel>
+</UserControl>

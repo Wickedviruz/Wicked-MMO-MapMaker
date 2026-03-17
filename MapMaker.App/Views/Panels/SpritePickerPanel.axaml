@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:MapMaker.App.ViewModels"
+             xmlns:sprites="clr-namespace:MapMaker.Core.Sprites;assembly=MapMaker.Core"
+             xmlns:conv="clr-namespace:MapMaker.App.Converters"
+             x:Class="MapMaker.App.Views.Panels.SpritePickerPanel"
+             x:DataType="vm:SpritePickerViewModel">
+
+    <UserControl.Resources>
+        <conv:SpriteToBitmapConverter x:Key="SpriteToBitmap"/>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Padding="6,4">
+            <TextBlock Text="Sprites" Foreground="White" FontWeight="Bold"/>
+        </Border>
+        <Border DockPanel.Dock="Top" Height="1" Background="#444"/>
+
+        <ListBox ItemsSource="{Binding Sprites}"
+                 SelectedItem="{Binding SelectedSprite}"
+                 Background="#252525">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="sprites:SpriteEntry">
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
+                        <Image Width="32" Height="32"
+                               Source="{Binding ., Converter={StaticResource SpriteToBitmap}}"
+                               RenderOptions.BitmapInterpolationMode="None"/>
+                        <StackPanel VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Text="{Binding Name}" Foreground="White" FontSize="11"/>
+                            <TextBlock Text="{Binding Id, StringFormat='ID: {0}'}"
+                                       Foreground="#888" FontSize="10"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</UserControl>

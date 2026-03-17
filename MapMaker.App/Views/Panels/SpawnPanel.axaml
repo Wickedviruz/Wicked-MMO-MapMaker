@@ -1,0 +1,74 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:MapMaker.App.ViewModels"
+             xmlns:maps="clr-namespace:MapMaker.Core.Maps;assembly=MapMaker.Core"
+             x:Class="MapMaker.App.Views.Panels.SpawnPanel"
+             x:DataType="vm:SpawnPanelViewModel">
+
+    <DockPanel>
+
+        <!-- Header -->
+        <Border DockPanel.Dock="Top" Padding="6,4">
+            <TextBlock Text="Spawns" Foreground="White" FontWeight="Bold"/>
+        </Border>
+        <Border DockPanel.Dock="Top" Height="1" Background="#444"/>
+
+        <!-- Spawn Areas -->
+        <Border DockPanel.Dock="Top" Padding="4">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Spawn Areas"
+                           Foreground="#aaa" FontSize="11" Margin="0,0,0,4"/>
+
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                            Spacing="4" Margin="0,4,0,0">
+                    <Button Content="＋ Area"  Command="{Binding AddAreaCommand}"    FontSize="11"/>
+                    <Button Content="－ Area"  Command="{Binding RemoveAreaCommand}" FontSize="11"/>
+                </StackPanel>
+
+                <ListBox ItemsSource="{Binding Areas}"
+                         SelectedItem="{Binding SelectedArea}"
+                         MaxHeight="140"
+                         Background="#252525">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="maps:SpawnArea">
+                            <TextBlock Foreground="White" FontSize="11"
+                                       Text="{Binding CenterX, StringFormat='({0},'}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Top" Height="1" Background="#333"/>
+
+        <!-- Monsters i vald area -->
+        <Border Padding="4">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Monster i vald area"
+                           Foreground="#aaa" FontSize="11" Margin="0,0,0,4"/>
+
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                            Spacing="4" Margin="0,4,0,0">
+                    <Button Content="＋ Monster"  Command="{Binding AddMonsterCommand}"    FontSize="11"/>
+                    <Button Content="－ Monster"  Command="{Binding RemoveMonsterCommand}" FontSize="11"/>
+                </StackPanel>
+
+                <ListBox ItemsSource="{Binding Monsters}"
+                         SelectedItem="{Binding SelectedMonster}"
+                         Background="#252525">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="maps:MonsterSpawn">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="{Binding Name}"
+                                           Foreground="White" FontSize="11"/>
+                                <TextBlock Text="{Binding SpawnTime, StringFormat='({0}s)'}"
+                                           Foreground="#888" FontSize="11"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+    </DockPanel>
+</UserControl>
