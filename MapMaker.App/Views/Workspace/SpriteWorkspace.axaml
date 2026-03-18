@@ -1,0 +1,119 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:MapMaker.App.ViewModels"
+             xmlns:sprites="clr-namespace:MapMaker.Core.Sprites;assembly=MapMaker.Core"
+             xmlns:conv="clr-namespace:MapMaker.App.Converters"
+             x:Class="MapMaker.App.Views.Workspace.SpriteWorkspace"
+             x:DataType="vm:SpriteWorkspaceViewModel">
+
+    <UserControl.Resources>
+        <conv:SpriteToBitmapConverter x:Key="SpriteToBitmap"/>
+    </UserControl.Resources>
+
+    <Grid ColumnDefinitions="250,*,220">
+
+        <!-- Vänster: Sprite-lista -->
+        <DockPanel Grid.Column="0" Background="#252525">
+
+            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                <TextBlock Text="SPRITES" Foreground="#aaa"
+                           FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+            </Border>
+
+            <!-- Knappar -->
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                        Spacing="4" Margin="4" Background="#1e1e1e">
+                <Button Content="＋ Importera" Command="{Binding ImportCommand}"
+                        FontSize="11" HorizontalAlignment="Stretch"/>
+                <Button Content="💾 Spara"    Command="{Binding SaveAtlasCommand}"
+                        FontSize="11"/>
+                <Button Content="📂 Ladda"    Command="{Binding LoadAtlasCommand}"
+                        FontSize="11"/>
+            </StackPanel>
+
+            <ListBox ItemsSource="{Binding Sprites}"
+                     SelectedItem="{Binding SelectedSprite}"
+                     Background="#252525">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="sprites:SpriteEntry">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
+                            <Image Width="32" Height="32"
+                                   Source="{Binding ., Converter={StaticResource SpriteToBitmap}}"
+                                   RenderOptions.BitmapInterpolationMode="None"/>
+                            <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{Binding Name}"
+                                           Foreground="White" FontSize="12"/>
+                                <TextBlock Text="{Binding Category}"
+                                           Foreground="#888" FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <!-- Mitten: Förhandsvisning -->
+        <Border Grid.Column="1" Background="#1e1e1e">
+            <Grid>
+                <TextBlock Text="Välj en sprite"
+                           IsVisible="{Binding !HasSelection}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="#555" FontSize="16"/>
+
+                <Image IsVisible="{Binding HasSelection}"
+                       Source="{Binding SelectedSprite, Converter={StaticResource SpriteToBitmap}}"
+                       Width="256" Height="256"
+                       RenderOptions.BitmapInterpolationMode="None"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Höger: Egenskaper -->
+        <DockPanel Grid.Column="2" Background="#252525">
+
+            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                <TextBlock Text="EGENSKAPER" Foreground="#aaa"
+                           FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+            </Border>
+
+            <StackPanel IsVisible="{Binding HasSelection}"
+                        Margin="8" Spacing="8">
+
+                <TextBlock Text="Namn:" Foreground="#aaa" FontSize="11"/>
+                <TextBox Text="{Binding EditName}" FontSize="12"/>
+
+                <TextBlock Text="Kategori:" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
+                <ComboBox ItemsSource="{Binding Categories}"
+                          SelectedItem="{Binding EditCategory}"
+                          HorizontalAlignment="Stretch"/>
+
+                <TextBlock Text="{Binding SelectedSprite.Id, StringFormat='ID: {0}'}"
+                           Foreground="#888" FontSize="11"/>
+                <TextBlock Foreground="#888" FontSize="11">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Storlek: {0}x{1}">
+                            <Binding Path="SelectedSprite.Width"/>
+                            <Binding Path="SelectedSprite.Height"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Foreground="#888" FontSize="11">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Position: {0},{1}">
+                            <Binding Path="SelectedSprite.X"/>
+                            <Binding Path="SelectedSprite.Y"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+
+                <Button Content="✔ Spara ändringar"
+                        Command="{Binding ApplyEditCommand}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,8,0,0"/>
+            </StackPanel>
+
+        </DockPanel>
+    </Grid>
+</UserControl>

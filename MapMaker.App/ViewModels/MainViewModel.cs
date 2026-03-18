@@ -22,6 +22,7 @@ public class MainViewModel
     public LayerPanelViewModel   LayerPanel   { get; } = new();
     public SpawnPanelViewModel   SpawnPanel   { get; } = new();
     public ItemPanelViewModel    ItemPanel    { get; } = new();
+    public WorkspaceViewModel   Workspace     { get; } = new();   
 
     // Commands
     public ICommand NewMapCommand        { get; }

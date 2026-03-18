@@ -1,0 +1,10 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MapMaker.App.Views.Workspace.ItemWorkspace">
+    <Grid>
+        <TextBlock Text="⚔️ Item Editor — kommer snart"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="#555" FontSize="18"/>
+    </Grid>
+</UserControl>

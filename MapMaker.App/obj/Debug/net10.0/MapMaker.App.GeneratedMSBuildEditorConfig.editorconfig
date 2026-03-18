@@ -46,3 +46,12 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.App/Views/Panels/SpritePickerPanel.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.App/Views/Workspace/ItemWorkspace.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.App/Views/Workspace/MapWorkspace.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.App/Views/Workspace/SpriteWorkspace.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
