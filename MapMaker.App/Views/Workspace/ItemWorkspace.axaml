@@ -1,10 +1,147 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="MapMaker.App.Views.Workspace.ItemWorkspace">
-    <Grid>
-        <TextBlock Text="⚔️ Item Editor — kommer snart"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Foreground="#555" FontSize="18"/>
+             xmlns:vm="clr-namespace:MapMaker.App.ViewModels"
+             xmlns:items="clr-namespace:MapMaker.Core.Items;assembly=MapMaker.Core"
+             xmlns:sprites="clr-namespace:MapMaker.Core.Sprites;assembly=MapMaker.Core"
+             xmlns:conv="clr-namespace:MapMaker.App.Converters"
+             x:Class="MapMaker.App.Views.Workspace.ItemWorkspace"
+             x:DataType="vm:ItemWorkspaceViewModel">
+
+    <UserControl.Resources>
+        <conv:SpriteToBitmapConverter x:Key="SpriteToBitmap"/>
+    </UserControl.Resources>
+
+    <Grid ColumnDefinitions="220,*,280">
+
+        <!-- Vänster: Item-lista -->
+        <DockPanel Grid.Column="0" Background="#252525">
+            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                <TextBlock Text="ITEMS" Foreground="#aaa"
+                           FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+            </Border>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                        Spacing="4" Margin="4" Background="#1e1e1e">
+                <Button Content="＋"  Command="{Binding AddItemCommand}"   FontSize="11" Width="32"/>
+                <Button Content="－"  Command="{Binding RemoveItemCommand}" FontSize="11" Width="32"/>
+                <Button Content="💾"  Command="{Binding SaveItemsCommand}"  FontSize="11" ToolTip.Tip="Spara items.wdef"/>
+                <Button Content="📂"  Command="{Binding LoadItemsCommand}"  FontSize="11" ToolTip.Tip="Ladda items.wdef"/>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}"
+                     Background="#252525">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="items:ItemDefinition">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
+                            <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{Binding Name}"
+                                           Foreground="White" FontSize="12"/>
+                                <TextBlock Text="{Binding Id, StringFormat='ID: {0}'}"
+                                           Foreground="#888" FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <!-- Mitten: Sprite-picker -->
+        <DockPanel Grid.Column="1" Background="#1e1e1e">
+            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2a2a2a">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBlock Text="VÄLJ SPRITE" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"
+                               VerticalAlignment="Center"/>
+                    <Image Width="32" Height="32"
+                           IsVisible="{Binding HasSelection}"
+                           Source="{Binding SpritePreview, Converter={StaticResource SpriteToBitmap}}"
+                           RenderOptions.BitmapInterpolationMode="None"/>
+                    <TextBlock IsVisible="{Binding HasSelection}"
+                               Text="{Binding SelectedItem.SpriteId, StringFormat='Sprite ID: {0}'}"
+                               Foreground="#aaa" FontSize="11" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+            <ListBox ItemsSource="{Binding Sprites}"
+                     SelectedItem="{Binding SelectedSprite}"
+                     Background="#1e1e1e">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="sprites:SpriteEntry">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
+                            <Image Width="32" Height="32"
+                                   Source="{Binding ., Converter={StaticResource SpriteToBitmap}}"
+                                   RenderOptions.BitmapInterpolationMode="None"/>
+                            <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="11"/>
+                                <TextBlock Text="{Binding Id, StringFormat='ID: {0}'}"
+                                           Foreground="#888" FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <!-- Höger: Egenskaper -->
+        <DockPanel Grid.Column="2" Background="#252525">
+            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                <TextBlock Text="EGENSKAPER" Foreground="#aaa"
+                           FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+            </Border>
+
+            <ScrollViewer IsVisible="{Binding HasSelection}">
+                <StackPanel Margin="8" Spacing="6">
+
+                    <TextBlock Text="Namn:" Foreground="#aaa" FontSize="11"/>
+                    <TextBox Text="{Binding SelectedItem.Name}" FontSize="12"/>
+
+                    <TextBlock Text="Typ:" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
+                    <ComboBox ItemsSource="{Binding ItemTypes}"
+                              SelectedItem="{Binding SelectedItem.Type}"
+                              HorizontalAlignment="Stretch"/>
+
+                    <TextBlock Text="Stack Order:" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
+                    <ComboBox ItemsSource="{Binding StackOrders}"
+                              SelectedItem="{Binding SelectedItem.StackOrder}"
+                              HorizontalAlignment="Stretch"/>
+
+                    <Border Height="1" Background="#444" Margin="0,8"/>
+
+                    <TextBlock Text="FLAGGOR" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+
+                    <CheckBox Content="Walkable"         IsChecked="{Binding FlagWalkable}"        Foreground="White"/>
+                    <CheckBox Content="Block Solid"      IsChecked="{Binding FlagBlockSolid}"      Foreground="White"/>
+                    <CheckBox Content="Block Missiles"   IsChecked="{Binding FlagBlockMissiles}"   Foreground="White"/>
+                    <CheckBox Content="Block Pathfinder" IsChecked="{Binding FlagBlockPathfinder}" Foreground="White"/>
+                    <CheckBox Content="Pickupable"       IsChecked="{Binding FlagPickupable}"      Foreground="White"/>
+                    <CheckBox Content="Stackable"        IsChecked="{Binding FlagStackable}"       Foreground="White"/>
+                    <CheckBox Content="Movable"          IsChecked="{Binding FlagMovable}"         Foreground="White"/>
+                    <CheckBox Content="Rotatable"        IsChecked="{Binding FlagRotatable}"       Foreground="White"/>
+                    <CheckBox Content="Hangable"         IsChecked="{Binding FlagHangable}"        Foreground="White"/>
+                    <CheckBox Content="Readable"         IsChecked="{Binding FlagReadable}"        Foreground="White"/>
+                    <CheckBox Content="Multi Use"        IsChecked="{Binding FlagMultiUse}"        Foreground="White"/>
+                    <CheckBox Content="Full Ground"      IsChecked="{Binding FlagFullGround}"      Foreground="White"/>
+                    <CheckBox Content="Has Elevation"    IsChecked="{Binding FlagHasElevation}"    Foreground="White"/>
+                    <CheckBox Content="Ignore Look"      IsChecked="{Binding FlagIgnoreLook}"      Foreground="White"/>
+
+                    <Border Height="1" Background="#444" Margin="0,8"/>
+
+                    <TextBlock Text="RENDER" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+
+                    <TextBlock Text="Light Level:" Foreground="#aaa" FontSize="11"/>
+                    <NumericUpDown Value="{Binding SelectedItem.LightLevel}"
+                                   Minimum="0" Maximum="255"/>
+
+                    <TextBlock Text="Light Color:" Foreground="#aaa" FontSize="11"/>
+                    <NumericUpDown Value="{Binding SelectedItem.LightColor}"
+                                   Minimum="0" Maximum="255"/>
+
+                    <TextBlock Text="Minimap Color:" Foreground="#aaa" FontSize="11"/>
+                    <NumericUpDown Value="{Binding SelectedItem.MinimapColor}"
+                                   Minimum="0" Maximum="16777215"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </UserControl>

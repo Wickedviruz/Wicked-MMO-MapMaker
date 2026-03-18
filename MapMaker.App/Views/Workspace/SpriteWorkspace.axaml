@@ -8,112 +8,179 @@
 
     <UserControl.Resources>
         <conv:SpriteToBitmapConverter x:Key="SpriteToBitmap"/>
+        <conv:AnimationToBitmapConverter x:Key="AnimToBitmap"/>
     </UserControl.Resources>
 
-    <Grid ColumnDefinitions="250,*,220">
+    <Grid RowDefinitions="*,8,Auto">
 
-        <!-- Vänster: Sprite-lista -->
-        <DockPanel Grid.Column="0" Background="#252525">
+        <!-- Övre del: Sprite editor -->
+        <Grid Grid.Row="0" ColumnDefinitions="220,*,240">
 
-            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
-                <TextBlock Text="SPRITES" Foreground="#aaa"
-                           FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
-            </Border>
-
-            <!-- Knappar -->
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
-                        Spacing="4" Margin="4" Background="#1e1e1e">
-                <Button Content="＋ Importera" Command="{Binding ImportCommand}"
-                        FontSize="11" HorizontalAlignment="Stretch"/>
-                <Button Content="💾 Spara"    Command="{Binding SaveAtlasCommand}"
-                        FontSize="11"/>
-                <Button Content="📂 Ladda"    Command="{Binding LoadAtlasCommand}"
-                        FontSize="11"/>
-            </StackPanel>
-
-            <ListBox ItemsSource="{Binding Sprites}"
-                     SelectedItem="{Binding SelectedSprite}"
-                     Background="#252525">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="sprites:SpriteEntry">
-                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
-                            <Image Width="32" Height="32"
-                                   Source="{Binding ., Converter={StaticResource SpriteToBitmap}}"
-                                   RenderOptions.BitmapInterpolationMode="None"/>
-                            <StackPanel VerticalAlignment="Center" Spacing="2">
-                                <TextBlock Text="{Binding Name}"
-                                           Foreground="White" FontSize="12"/>
-                                <TextBlock Text="{Binding Category}"
-                                           Foreground="#888" FontSize="10"/>
+            <!-- Vänster: Sprite-lista -->
+            <DockPanel Grid.Column="0" Background="#252525">
+                <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                    <TextBlock Text="SPRITES" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+                </Border>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                            Spacing="4" Margin="4" Background="#1e1e1e">
+                    <Button Content="＋ Importera" Command="{Binding ImportCommand}" FontSize="11"/>
+                    <Button Content="💾"           Command="{Binding SaveAtlasCommand}" FontSize="11" ToolTip.Tip="Spara atlas"/>
+                    <Button Content="📂"           Command="{Binding LoadAtlasCommand}" FontSize="11" ToolTip.Tip="Ladda atlas"/>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding Sprites}"
+                         SelectedItem="{Binding SelectedSprite}"
+                         Background="#252525">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="sprites:SpriteEntry">
+                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
+                                <Image Width="32" Height="32"
+                                       Source="{Binding ., Converter={StaticResource SpriteToBitmap}}"
+                                       RenderOptions.BitmapInterpolationMode="None"/>
+                                <StackPanel VerticalAlignment="Center" Spacing="2">
+                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="12"/>
+                                    <TextBlock Text="{Binding Category}" Foreground="#888" FontSize="10"/>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
 
-        <!-- Mitten: Förhandsvisning -->
-        <Border Grid.Column="1" Background="#1e1e1e">
-            <Grid>
-                <TextBlock Text="Välj en sprite"
-                           IsVisible="{Binding !HasSelection}"
+            <!-- Mitten: Förhandsvisning -->
+            <Border Grid.Column="1" Background="#1e1e1e">
+                <Grid>
+                    <TextBlock Text="Välj en sprite"
+                               IsVisible="{Binding !HasSelection}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#555" FontSize="16"/>
+                    <Image IsVisible="{Binding HasSelection}"
+                           Source="{Binding PreviewSprite, Converter={StaticResource SpriteToBitmap}}"
+                           Width="256" Height="256"
+                           RenderOptions.BitmapInterpolationMode="None"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Foreground="#555" FontSize="16"/>
-
-                <Image IsVisible="{Binding HasSelection}"
-                       Source="{Binding SelectedSprite, Converter={StaticResource SpriteToBitmap}}"
-                       Width="256" Height="256"
-                       RenderOptions.BitmapInterpolationMode="None"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-            </Grid>
-        </Border>
-
-        <!-- Höger: Egenskaper -->
-        <DockPanel Grid.Column="2" Background="#252525">
-
-            <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
-                <TextBlock Text="EGENSKAPER" Foreground="#aaa"
-                           FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+                           VerticalAlignment="Center"/>
+                </Grid>
             </Border>
 
-            <StackPanel IsVisible="{Binding HasSelection}"
-                        Margin="8" Spacing="8">
+            <!-- Höger: Sprite-egenskaper -->
+            <DockPanel Grid.Column="2" Background="#252525">
+                <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                    <TextBlock Text="EGENSKAPER" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+                </Border>
+                <StackPanel IsVisible="{Binding HasSelection}" Margin="8" Spacing="8">
+                    <TextBlock Text="Namn:" Foreground="#aaa" FontSize="11"/>
+                    <TextBox Text="{Binding EditName}" FontSize="12"/>
+                    <TextBlock Text="Kategori:" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
+                    <ComboBox ItemsSource="{Binding Categories}"
+                              SelectedItem="{Binding EditCategory}"
+                              HorizontalAlignment="Stretch"/>
+                    <TextBlock Text="{Binding SelectedSprite.Id, StringFormat='ID: {0}'}"
+                               Foreground="#888" FontSize="11"/>
+                    <TextBlock Foreground="#888" FontSize="11">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Storlek: {0}x{1}">
+                                <Binding Path="SelectedSprite.Width"/>
+                                <Binding Path="SelectedSprite.Height"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Button Content="✔ Spara ändringar"
+                            Command="{Binding ApplyEditCommand}"
+                            HorizontalAlignment="Stretch" Margin="0,8,0,0"/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
 
-                <TextBlock Text="Namn:" Foreground="#aaa" FontSize="11"/>
-                <TextBox Text="{Binding EditName}" FontSize="12"/>
+        <!-- Splitter -->
+        <Border Grid.Row="1" Background="#333"/>
 
-                <TextBlock Text="Kategori:" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
-                <ComboBox ItemsSource="{Binding Categories}"
-                          SelectedItem="{Binding EditCategory}"
-                          HorizontalAlignment="Stretch"/>
+        <!-- Nedre del: Animation editor -->
+        <Grid Grid.Row="2" Height="220" ColumnDefinitions="220,*,240"
+              DataContext="{Binding AnimationEditor}">
 
-                <TextBlock Text="{Binding SelectedSprite.Id, StringFormat='ID: {0}'}"
-                           Foreground="#888" FontSize="11"/>
-                <TextBlock Foreground="#888" FontSize="11">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="Storlek: {0}x{1}">
-                            <Binding Path="SelectedSprite.Width"/>
-                            <Binding Path="SelectedSprite.Height"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-                <TextBlock Foreground="#888" FontSize="11">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="Position: {0},{1}">
-                            <Binding Path="SelectedSprite.X"/>
-                            <Binding Path="SelectedSprite.Y"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
+            <!-- Vänster: Animations-lista -->
+            <DockPanel Grid.Column="0" Background="#252525"
+                       x:DataType="vm:AnimationEditorViewModel">
+                <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                    <TextBlock Text="ANIMATIONER" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+                </Border>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                            Spacing="4" Margin="4">
+                    <Button Content="＋" Command="{Binding AddAnimationCommand}"    Width="32" FontSize="11"/>
+                    <Button Content="－" Command="{Binding RemoveAnimationCommand}" Width="32" FontSize="11"/>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding Animations}"
+                         SelectedItem="{Binding SelectedAnimation}"
+                         Background="#252525">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="sprites:SpriteAnimation">
+                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="2">
+                                <Image Width="32" Height="32"
+                                    Source="{Binding ., Converter={StaticResource AnimToBitmap}}"
+                                    RenderOptions.BitmapInterpolationMode="None"/>
+                                <StackPanel VerticalAlignment="Center" Spacing="2">
+                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="12"/>
+                                    <TextBlock Text="{Binding Id, StringFormat='ID: {0}'}"
+                                            Foreground="#888" FontSize="10"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
 
-                <Button Content="✔ Spara ändringar"
-                        Command="{Binding ApplyEditCommand}"
-                        HorizontalAlignment="Stretch"
-                        Margin="0,8,0,0"/>
-            </StackPanel>
+            <!-- Mitten: Frames -->
+            <DockPanel Grid.Column="1" Background="#1e1e1e"
+                       x:DataType="vm:AnimationEditorViewModel">
+                <Border DockPanel.Dock="Top" Padding="8,6" Background="#2a2a2a">
+                    <TextBlock Text="FRAMES" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+                </Border>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
+                            Spacing="4" Margin="4">
+                    <Button Content="＋ Lägg till vald sprite" Command="{Binding AddFrameCommand}"    FontSize="11"/>
+                    <Button Content="－"                       Command="{Binding RemoveFrameCommand}" FontSize="11" Width="32"/>
+                    <Button Content="↑"                        Command="{Binding MoveFrameUpCommand}" FontSize="11" Width="32"/>
+                    <Button Content="↓"                       Command="{Binding MoveFrameDownCommand}" FontSize="11" Width="32"/>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding CurrentFrames}"
+                         SelectedItem="{Binding SelectedFrame}"
+                         Background="#1e1e1e">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="x:UInt32">
+                            <TextBlock Text="{Binding StringFormat='Sprite ID: {0}'}"
+                                       Foreground="White" FontSize="12"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
 
-        </DockPanel>
+            <!-- Höger: Animation-egenskaper -->
+            <DockPanel Grid.Column="2" Background="#252525"
+                       x:DataType="vm:AnimationEditorViewModel">
+                <Border DockPanel.Dock="Top" Padding="8,6" Background="#2c2c2c">
+                    <TextBlock Text="ANIMATION" Foreground="#aaa"
+                               FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
+                </Border>
+                <StackPanel IsVisible="{Binding HasSelection}" Margin="8" Spacing="8">
+                    <TextBlock Text="Namn:" Foreground="#aaa" FontSize="11"/>
+                    <TextBox Text="{Binding EditName}" FontSize="12"/>
+                    <TextBlock Text="Speed (ms):" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
+                    <NumericUpDown Value="{Binding EditSpeedMs}"
+                                   Minimum="16" Maximum="5000"/>
+                    <TextBlock Text="Loop:" Foreground="#aaa" FontSize="11" Margin="0,4,0,0"/>
+                    <ComboBox ItemsSource="{Binding LoopModes}"
+                              SelectedItem="{Binding EditLoopMode}"
+                              HorizontalAlignment="Stretch"/>
+                    <Button Content="✔ Spara ändringar"
+                            Command="{Binding ApplyEditCommand}"
+                            HorizontalAlignment="Stretch" Margin="0,8,0,0"/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
     </Grid>
 </UserControl>

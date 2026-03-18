@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MapMaker.Core.Items;
 using MapMaker.Core.Map;
 using MapMaker.Core.Maps;
@@ -19,7 +20,7 @@ public class EditorSession
     public SpriteAtlas Atlas { get; set; } = new();
 
     // Items
-    public List<ItemDefinition> Items { get; set; } = new();
+    public ObservableCollection<ItemDefinition> Items { get; set; } = new();
 
     // Projekt-sökväg — null om ej sparat än
     public string? ProjectPath { get; set; }
@@ -33,7 +34,7 @@ public class EditorSession
         CurrentMap       = null;
         SpawnData        = new SpawnData();
         Atlas            = new SpriteAtlas();
-        Items            = new();
+        Items             = new ObservableCollection<ItemDefinition>();
         ProjectPath      = null;
         HasUnsavedChanges = false;
     }
