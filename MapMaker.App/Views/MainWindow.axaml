@@ -85,9 +85,17 @@
 
             <!-- Workspace -->
             <Grid Grid.Column="1">
-                <ws:SpriteWorkspace IsVisible="{Binding Workspace.IsSprites}"/>
-                <ws:ItemWorkspace   IsVisible="{Binding Workspace.IsItems}"/>
-                <ws:MapWorkspace    IsVisible="{Binding Workspace.IsMap}"/>
+                <ws:SpriteWorkspace 
+                    IsVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).Workspace.IsSprites}"
+                    IsHitTestVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).Workspace.IsSprites}"
+                    DataContext="{Binding SpriteWorkspace}"/>
+                <ws:ItemWorkspace   
+                    IsVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).Workspace.IsItems}"
+                    IsHitTestVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).Workspace.IsItems}"
+                    DataContext="{Binding ItemWorkspace}"/>
+                <ws:MapWorkspace    
+                    IsVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).Workspace.IsMap}"
+                    IsHitTestVisible="{Binding $parent[Window].((vm:MainViewModel)DataContext).Workspace.IsMap}"/>
             </Grid>
 
         </Grid>

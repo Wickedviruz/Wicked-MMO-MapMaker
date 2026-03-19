@@ -17,7 +17,17 @@ public class EditorSession
     public SpawnData SpawnData { get; set; } = new();
 
     // Sprites
-    public SpriteAtlas Atlas { get; set; } = new();
+    private SpriteAtlas _atlas = new();
+    public SpriteAtlas Atlas
+    {
+        get => _atlas;
+        set
+        {
+            _atlas = value;
+            AtlasChanged?.Invoke();
+        }
+    }
+    public event Action? AtlasChanged;
 
     // Items
     public ObservableCollection<ItemDefinition> Items { get; set; } = new();

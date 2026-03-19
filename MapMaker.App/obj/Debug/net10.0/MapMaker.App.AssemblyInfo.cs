@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MapMaker.App")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e46a76967740d640549e530abe579e951733e345")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4bd4474a3ad8b5430feaf7275947b4270df2fb55")]
 [assembly: System.Reflection.AssemblyProductAttribute("MapMaker.App")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MapMaker.App")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -22,7 +22,10 @@ public class MainViewModel
     public LayerPanelViewModel   LayerPanel   { get; } = new();
     public SpawnPanelViewModel   SpawnPanel   { get; } = new();
     public ItemPanelViewModel    ItemPanel    { get; } = new();
-    public WorkspaceViewModel   Workspace     { get; } = new();   
+    public WorkspaceViewModel   Workspace     { get; } = new(); 
+    public SpriteWorkspaceViewModel SpriteWorkspace { get; }
+    public ItemWorkspaceViewModel   ItemWorkspace   { get; }  
+    public MapWorkspaceViewModel MapWorkspace { get; } = new();
 
     // Commands
     public ICommand NewMapCommand        { get; }
@@ -44,6 +47,8 @@ public class MainViewModel
     public MainViewModel(Window mainWindow)
     {
         _mainWindow         = mainWindow;
+        SpriteWorkspace  = new SpriteWorkspaceViewModel(mainWindow);
+        ItemWorkspace    = new ItemWorkspaceViewModel(mainWindow);
         NewMapCommand       = new RelayCommand(NewMap);
         OpenMapCommand      = new RelayCommand(OpenMap);
         SaveMapCommand      = new RelayCommand(SaveMap);
@@ -64,7 +69,7 @@ public class MainViewModel
         var dialog = new Views.Dialogs.NewMapDialog();
         await dialog.ShowDialog(_mainWindow);
 
-        var vm = (ViewModels.NewMapDialogViewModel)dialog.DataContext!;
+        var vm = (NewMapDialogViewModel)dialog.DataContext!;
         if (!vm.Confirmed) return;
 
         _currentMap = new RMap
@@ -77,6 +82,8 @@ public class MainViewModel
         _currentMap.AddLayer("Ground", LayerType.Ground);
         LayerPanel.Initialize(_currentMap);
         SpawnPanel.Initialize(new SpawnData());
+        EditorSession.Current.CurrentMap = _currentMap;
+        MapWorkspace.OnMapLoaded();
         MapInfo    = $"{_currentMap.Name}  {_currentMap.Width}x{_currentMap.Height}";
         StatusText = "Ny karta skapad.";
     }

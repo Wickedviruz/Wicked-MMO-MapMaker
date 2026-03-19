@@ -34,7 +34,26 @@ public class ItemWorkspaceViewModel : INotifyPropertyChanged
             OnPropertyChanged();
             OnPropertyChanged(nameof(HasSelection));
             OnPropertyChanged(nameof(SpritePreview));
+            RefreshFlags();
         }
+    }
+
+    private void RefreshFlags()
+    {
+        OnPropertyChanged(nameof(FlagWalkable));
+        OnPropertyChanged(nameof(FlagBlockSolid));
+        OnPropertyChanged(nameof(FlagBlockMissiles));
+        OnPropertyChanged(nameof(FlagBlockPathfinder));
+        OnPropertyChanged(nameof(FlagPickupable));
+        OnPropertyChanged(nameof(FlagStackable));
+        OnPropertyChanged(nameof(FlagMovable));
+        OnPropertyChanged(nameof(FlagRotatable));
+        OnPropertyChanged(nameof(FlagHangable));
+        OnPropertyChanged(nameof(FlagReadable));
+        OnPropertyChanged(nameof(FlagMultiUse));
+        OnPropertyChanged(nameof(FlagFullGround));
+        OnPropertyChanged(nameof(FlagHasElevation));
+        OnPropertyChanged(nameof(FlagIgnoreLook));
     }
 
     public bool HasSelection => SelectedItem is not null;
@@ -155,6 +174,9 @@ public class ItemWorkspaceViewModel : INotifyPropertyChanged
         RemoveItemCommand = new RelayCommand(RemoveItem);
         SaveItemsCommand  = new RelayCommand(SaveItems);
         LoadItemsCommand  = new RelayCommand(LoadItems);
+
+        EditorSession.Current.AtlasChanged += () =>
+        OnPropertyChanged(nameof(Sprites));
     }
 
     private void AddItem()

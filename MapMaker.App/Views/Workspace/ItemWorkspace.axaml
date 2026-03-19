@@ -108,20 +108,20 @@
                     <TextBlock Text="FLAGGOR" Foreground="#aaa"
                                FontSize="11" FontWeight="Bold" LetterSpacing="2"/>
 
-                    <CheckBox Content="Walkable"         IsChecked="{Binding FlagWalkable}"        Foreground="White"/>
-                    <CheckBox Content="Block Solid"      IsChecked="{Binding FlagBlockSolid}"      Foreground="White"/>
-                    <CheckBox Content="Block Missiles"   IsChecked="{Binding FlagBlockMissiles}"   Foreground="White"/>
-                    <CheckBox Content="Block Pathfinder" IsChecked="{Binding FlagBlockPathfinder}" Foreground="White"/>
-                    <CheckBox Content="Pickupable"       IsChecked="{Binding FlagPickupable}"      Foreground="White"/>
-                    <CheckBox Content="Stackable"        IsChecked="{Binding FlagStackable}"       Foreground="White"/>
-                    <CheckBox Content="Movable"          IsChecked="{Binding FlagMovable}"         Foreground="White"/>
-                    <CheckBox Content="Rotatable"        IsChecked="{Binding FlagRotatable}"       Foreground="White"/>
-                    <CheckBox Content="Hangable"         IsChecked="{Binding FlagHangable}"        Foreground="White"/>
-                    <CheckBox Content="Readable"         IsChecked="{Binding FlagReadable}"        Foreground="White"/>
-                    <CheckBox Content="Multi Use"        IsChecked="{Binding FlagMultiUse}"        Foreground="White"/>
-                    <CheckBox Content="Full Ground"      IsChecked="{Binding FlagFullGround}"      Foreground="White"/>
-                    <CheckBox Content="Has Elevation"    IsChecked="{Binding FlagHasElevation}"    Foreground="White"/>
-                    <CheckBox Content="Ignore Look"      IsChecked="{Binding FlagIgnoreLook}"      Foreground="White"/>
+                    <CheckBox Content="Walkable"         IsChecked="{Binding FlagWalkable,        Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Block Solid"      IsChecked="{Binding FlagBlockSolid,      Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Block Missiles"   IsChecked="{Binding FlagBlockMissiles,   Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Block Pathfinder" IsChecked="{Binding FlagBlockPathfinder, Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Pickupable"       IsChecked="{Binding FlagPickupable,      Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Stackable"        IsChecked="{Binding FlagStackable,       Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Movable"          IsChecked="{Binding FlagMovable,         Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Rotatable"        IsChecked="{Binding FlagRotatable,       Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Hangable"         IsChecked="{Binding FlagHangable,        Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Readable"         IsChecked="{Binding FlagReadable,        Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Multi Use"        IsChecked="{Binding FlagMultiUse,        Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Full Ground"      IsChecked="{Binding FlagFullGround,      Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Has Elevation"    IsChecked="{Binding FlagHasElevation,    Mode=TwoWay}" Foreground="White"/>
+                    <CheckBox Content="Ignore Look"      IsChecked="{Binding FlagIgnoreLook,      Mode=TwoWay}" Foreground="White"/>
 
                     <Border Height="1" Background="#444" Margin="0,8"/>
 
