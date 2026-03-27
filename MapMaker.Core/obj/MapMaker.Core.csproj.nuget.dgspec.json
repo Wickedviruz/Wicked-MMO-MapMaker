@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/MapMaker.Core.csproj": {}
+    "/home/johan-ivarsson/dev/Wicked-MMO-MapMaker/MapMaker.Core/MapMaker.Core.csproj": {}
   },
   "projects": {
-    "/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/MapMaker.Core.csproj": {
+    "/home/johan-ivarsson/dev/Wicked-MMO-MapMaker/MapMaker.Core/MapMaker.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/MapMaker.Core.csproj",
+        "projectUniqueName": "/home/johan-ivarsson/dev/Wicked-MMO-MapMaker/MapMaker.Core/MapMaker.Core.csproj",
         "projectName": "MapMaker.Core",
-        "projectPath": "/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/MapMaker.Core.csproj",
-        "packagesPath": "/home/johanivarsson/.nuget/packages/",
-        "outputPath": "/home/johanivarsson/dev/Wicked-MMO-MapEditor/MapMaker.Core/obj/",
+        "projectPath": "/home/johan-ivarsson/dev/Wicked-MMO-MapMaker/MapMaker.Core/MapMaker.Core.csproj",
+        "packagesPath": "/home/johan-ivarsson/.nuget/packages/",
+        "outputPath": "/home/johan-ivarsson/dev/Wicked-MMO-MapMaker/MapMaker.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/johanivarsson/.nuget/NuGet/NuGet.Config"
+          "/home/johan-ivarsson/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"

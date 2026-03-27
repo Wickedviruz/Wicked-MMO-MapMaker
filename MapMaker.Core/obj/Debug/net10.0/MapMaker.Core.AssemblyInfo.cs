@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MapMaker.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4bd4474a3ad8b5430feaf7275947b4270df2fb55")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b4a8d156a8ba8b77d2288aaaae50b0b5a9d642a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MapMaker.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MapMaker.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
